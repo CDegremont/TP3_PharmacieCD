@@ -16,12 +16,13 @@ public class Client
 	// Constructeur surchargé
 	public Client(int id, String nom, double crédit) 
 	{
+		super();
 		this.id = id;
 		this.nom = nom;
-		this.crédit = crédit;
+		this.crédit = 0;
 	}
 	
-	//Methods
+	// Methods
 	@Override
 	public String toString()
 	{

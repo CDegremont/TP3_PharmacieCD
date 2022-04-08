@@ -13,30 +13,30 @@ public class Main
 	{
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println(
-				"Veuillez sélectionner le programme que vous souhaitez : \n" + "1. Création d'un nouveau client. \n"
-						+ "2. Afficher les infos d'un client. \n" + "3. Ajout d'un médicament dans la base de donnée. \n"
-						+ "4. Afficher les infos d'un médicament.. \n" + "5. Restock d'un médicament. \n" + "5. Vente d'un médicament. \n" + "6. Quitter. \n ");
+		System.out.println(""
+				+ "Veuillez sélectionner le programme que vous souhaitez : \n"
+				+ "1. Création d'un nouveau client dans la base de données. \n" + "2. Afficher les infos d'un client. \n"
+				+ "3. Ajout d'un médicament dans la base de données. \n" + "4. Afficher les infos d'un médicament. \n"
+				+ "5. Restock d'un médicament. \n" + "6. Vente d'un médicament. \n" + "7. Quitter. \n ");
 
 		int key = sc.nextInt();
 		switch (key)
 			{
 			case 1: // Création d'un nouveau client
-				creationClient();
+			double crédit = 0;
+			creationClient(crédit);
 				break;
 
 			case 2: // Affichage des informations client
 				infosClient();
 				break;
-				
+
 			case 3: // ajout d'un nouveau médicament
 				ajoutMedicament();
 				break;
-				
 
 			case 4: // Affichage des informations médicament
 				infosMedicament();
-
 				break;
 
 			case 5: // Restock des médicaments
@@ -56,22 +56,24 @@ public class Main
 			}
 		sc.close();
 	}
-	
-	public static void creationClient() // Fonction 1
+
+	public static void creationClient(double crédit) // Fonction 1
 	{
-			Scanner sc = new Scanner(System.in);
-			Client c1 = new Client();
+		Scanner sc = new Scanner(System.in);
+		Client c1 = new Client();
 
-			System.out.print("Création de client - Votre Nom : ");
-			c1.setNom(sc.next());
-			c1.setId(compteur++);
-			c1.setCrédit(150);
+		System.out.print("Création de client - Votre Nom : ");
+		c1.setNom(sc.next());
+		c1.setId(compteur++);
+		System.out.print("Création de client - Choix du crédit à pourvoir à votre pharmacie : ");
+		c1.setCrédit(crédit + sc.nextDouble());
 
-			listeClient.add(c1);
-			System.out.println("Nouveau client ajouté : " + c1.getNom() + " : " + c1.toString());
-			
-			main(null);
-			sc.close();
+		listeClient.add(c1);
+		System.out.println("Nouveau client ajouté : " + c1.getNom() + " : " + c1.toString()
+				+ ". Votre crédit s'élève à : " + c1.getCrédit() + "€.");
+
+		main(null);
+		sc.close();
 	}
 
 	private static void infosClient() // Fonction 2
@@ -96,55 +98,58 @@ public class Main
 		{
 			System.out.println("Aucun client ne correspondant à cet id.");
 		}
-		
+
 		main(null);
 		sc.close();
-		
+
 	}
-	
+
 	public static void ajoutMedicament() // Fonction 3
 	{
-			Scanner sc = new Scanner(System.in);
-			Medicament m1 = new Medicament();
+		Scanner sc = new Scanner(System.in);
+		Medicament m1 = new Medicament();
 
-			System.out.print("Création de médicament - Nom du médicament : ");
-			m1.setNom(sc.next());
-			m1.setId(compteur++);
-			System.out.print("Combien de stock voulez vous rajouter? ");
-			m1.setStock(sc.nextInt());
+		System.out.print("Création de médicament - Nom du médicament : ");
+		m1.setNom(sc.next());
+		m1.setId(compteur++);
+		System.out.print("Combien de stock voulez vous rajouter? ");
+		m1.setStock(sc.nextInt());
+		System.out.print("Quel est le prix unitaire de ce médicament? ");
+		m1.setPrix(sc.nextDouble());
+		
 
-			listeMedicament.add(m1);
-			System.out.println("Nouveau médicament ajouté : " + m1.getNom() + " : " + m1.getStock());
-			
-			main(null);
-			sc.close();
+		listeMedicament.add(m1);
+		System.out.println("Nouveau médicament ajouté : " + m1.getNom() + " : " + m1.getStock() + " Prix unitaire : " + m1.getPrix() + " Coût total du stock : " + m1.getStock()*m1.getPrix());
+
+		main(null);
+		sc.close();
 	}
 
 	private static void infosMedicament() // Fonction 4
 	{
-			System.out.println("Liste des médicaments : " + listeMedicament);
-			System.out.print("Choisir l'id du médicament à afficher : ");
+		System.out.println("Liste des médicaments : " + listeMedicament);
+		System.out.print("Choisir l'id du médicament à afficher : ");
 
-			Scanner sc = new Scanner(System.in);
-			int idMod = sc.nextInt();
+		Scanner sc = new Scanner(System.in);
+		int idMod = sc.nextInt();
 
-			boolean isTrouver = false;
-			for (int i = 0; i < listeMedicament.size(); i++)
+		boolean isTrouver = false;
+		for (int i = 0; i < listeMedicament.size(); i++)
+		{
+			if (listeMedicament.get(i).getId() == idMod)
 			{
-				if (listeMedicament.get(i).getId() == idMod)
-				{
-					isTrouver = true;
-					System.out.println(listeMedicament.get(i));
-				}
-
-			}
-			if (isTrouver == false)
-			{
-				System.out.println("Aucun médicament ne correspondant à cet id.");
+				isTrouver = true;
+				System.out.println(listeMedicament.get(i));
 			}
 
-			sc.close();
-			main(null);
+		}
+		if (isTrouver == false)
+		{
+			System.out.println("Aucun médicament ne correspondant à cet id.");
+		}
+
+		sc.close();
+		main(null);
 	}
 
 	private static void restockMedicament() // Fonction 5
@@ -162,7 +167,8 @@ public class Main
 
 			if (listeMedicament.get(i).getId() == idMod)
 			{
-				System.out.println("Stock actuel : " + listeMedicament.get(i).getStock() + "Saississez la quantité à rajouter : ");
+				System.out.println(
+						"Stock actuel : " + listeMedicament.get(i).getStock() + "Saississez la quantité à rajouter : ");
 				listeMedicament.get(i).setStock(sc.nextInt());
 				System.out.println("Stock désormais : " + listeMedicament.get(i).getStock());
 			}
@@ -177,37 +183,54 @@ public class Main
 		}
 	}
 
-	private static void venteMedicament() // Fonction 5
+	private static void venteMedicament() // Fonction 6
 	{
-		System.out.println("Liste des médicaments : " + listeMedicament);
-		System.out.print("Choisir l'id du médicament à vendre : ");
-
 		Scanner sc = new Scanner(System.in);
-		int idMod = sc.nextInt();
-
-		boolean isTrouver = false;
-		for (int i = 0; i < listeMedicament.size(); i++)
+		
+		System.out.println("Liste des clients : " + listeClient);
+		System.out.print("Choisir l'id du client à qui vendre le médicament : ");
+		int idClient = sc.nextInt();
+		
+		System.out.println("Liste des médicaments : " + listeMedicament);
+		System.out.print("Choisir l'id du médicament que vous voulez vendre : ");
+		int idMed = sc.nextInt();
+		
+		System.out.print("Choisir la quantité (en unité) du médicament que vous voulez vendre : ");
+		int qt = sc.nextInt();
+		
+		for (int i = 0; i < listeClient.size(); i++) 
 		{
-			if (listeMedicament.get(i).getId() == idMod)
+			if (listeClient.get(i).getId() == idClient)
 			{
-				System.out.println("Saissisez la quantité à vendre - celle-ci sera déduite du stock actuelle.");
-
-				isTrouver = true;
-				System.out.println(listeMedicament.get(i));
+				for (int j = 0; j < listeMedicament.size(); j++)
+				{
+					if (listeMedicament.get(j).getId() == idMed && listeClient.get(i).getCrédit() > listeMedicament.get(j).getPrix()*qt)
+					{
+						listeMedicament.get(j).setStock(listeMedicament.get(j).getStock() - qt);
+						listeClient.get(i).setCrédit(listeClient.get(i).getCrédit() - listeMedicament.get(j).getPrix()*qt);
+						System.out.println("Le crédit du client " + listeClient.get(i).getNom() + " s'élève désormais à " + listeClient.get(i).getCrédit() + "€.");
+						System.out.println("Le stock est désormais de : " + listeMedicament.get(i).getStock() + " unités. ");
+					}
+					
+					else
+					{
+						System.out.println("Aucun médicament ne correspond à cet id ou fonds insuffisant");
+					}
+				}
 			}
-
+			
+			else
+			{
+				System.out.println("Aucun client ne correspond à cet id.");
+			}
 		}
-		if (isTrouver == false)
-		{
-			System.out.println("Aucun client ne correspondant à cet id.");
-		}
-		sc.close();
 		main(null);
+		sc.close();
 	}
-
-	private static void quitter() // Fonction 6
+	
+	private static void quitter() // Fonction 7
 	{
-		System.out.println("Bonne journée à vous et à bientôt.");
+		System.out.println("[Fin de l'application] Bonne journée à vous et à bientôt.");
 	}
 
 }

@@ -17,6 +17,7 @@ public class Medicament
 	// Constructeur surchargé
 	public Medicament(int id, String nom, double prix, int stock)
 	{
+		super();
 		this.id = id;
 		this.nom = nom;
 		this.prix = prix;
@@ -24,7 +25,11 @@ public class Medicament
 	}
 	
 	//Methods
-
+	@Override
+	public String toString()
+	{
+		return "Medicament [id=" + id + ", nom=" + nom + ", prix=" + prix + ", stock=" + stock + "]";
+	}
 	
 	// GETTERS & SETTERS
 	public int getId()
